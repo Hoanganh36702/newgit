@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>find max in array</title>
+    <style></style>
+  </head>
+  <body>
+    <div id="result"></div>
+    <div id="max"></div>
+    <div id="min"></div>
+  <script>
+    let output = "";
+    let array = [];
+    let max = -Infinity;
+    let min = Infinity;
+    function random() {
+      for (let i = 0; i < 100; i++) {
+        let number = Math.floor(Math.random() * 100);
+        output += number + " ";
+        array.push(number)
+        if (i % 10 == 9) {
+          output += "<br>";
+        }
+      }
+      document.querySelector("#result").innerHTML = output;
+      minmax()
+    }
+    random();
+    function minmax(){
+      for(let j = 0;j < array.length;j++){
+        if(max < array[j]){
+          max = array[j]
+        }
+        if(min > array[j]){
+          min = array[j]
+        }
+      }
+      document.querySelector("#max").innerHTML = "The maximum value is: " + max;
+      document.querySelector("#min").innerHTML = "The minimum value is: " + min;
+    }
+  </script>
+  </body>
+</html>
