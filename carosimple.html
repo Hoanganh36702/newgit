@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create button</title>
+</head>
+<body>
+    <h1>Caro Game Simple</h1>
+    <p id="game"></p>
+    <button type='button' id='myBtn' onclick='myFunction()'>Change value</button>
+</body>
+<script>
+    let array = [];
+    let value = "";
+    function valueChanged(){
+        for(let i = 0 ; i < 5;i++){
+            array[i] = new Array(0,0,0,0,0);
+            for(let j = 0;j < 5;j++){
+                value += array[i][j] + "&nbsp;&nbsp;"; 
+            }   
+            value += "<br>";
+        }
+    }
+    valueChanged()
+    document.getElementById("game").innerHTML = value
+    function myFunction(){
+        value = "";
+        let x = prompt("x:")
+        let y = prompt("y:")
+        array[x][y] = "x"
+        for(let i=0;i<5;i++){
+            for(let j=0;j<5;j++){
+                value += array[i][j] + "&nbsp;&nbsp;"; 
+            }
+            value += "<br>";
+        }
+        document.getElementById("game").innerHTML = value
+    }
+</script>
+</html>
