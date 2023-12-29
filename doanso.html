@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hãy thử đoán xem!</title>
+</head>
+<style>
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+    .choi{
+        margin-right: 10px;
+        width: 70px;
+        height: 50px;
+        background-color: greenyellow;
+    }
+    .choilai{
+        width: 70px;
+        height: 50px;
+        background-color: gold;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <button class="choi">Chơi</button>
+        <button class="choilai">Chơi lại</button>
+    </div>
+</body>
+<script>
+    var choi =document.querySelector(".choi")
+    var choilai =document.querySelector(".choilai")
+    var a = Math.floor(Math.random()*10);
+    console.log(a)
+    var number = parseFloat(prompt("Chọn 1 số từ 1-10:"))
+    for(let i = 0 ; i <= 2 ; i++){
+        if(a == number){
+            alert("Chúc mừng bạn chọn đúng")
+            break
+        }else{
+            number = parseFloat(prompt("Bạn chọn sai, xin vui lòng chọn lại:"))
+            
+        }
+        if(i==2){
+            alert("Game kết thúc")
+        }
+    }
+</script>
+</html>
