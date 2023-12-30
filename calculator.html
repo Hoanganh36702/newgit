@@ -87,6 +87,41 @@ var input = document.querySelector(".input");
         var multiply = document.querySelector(".button-operatormultiply");
         var divide = document.querySelector(".button-operatordivide");
         var equals = document.querySelector(".button-operatorequals");
+        function cal() {
+            let a = input.value;
+            let result = a.split(/([+\-*/])/).filter(item => item !== '');
+            console.log(result);
+            return check(result);
+        }
+
+        function check(result) {
+            while (result.includes("*") || result.includes("/")) {
+                for (let i = 0; i < result.length; i++) {
+                    if (result[i] === "*") {
+                        let b = result[i - 1] * result[i + 1];
+                        result.splice(i - 1, 3, b);
+                    }
+                    if (result[i] === "/") {
+                        let b = result[i - 1] / result[i + 1];
+                        result.splice(i - 1, 3, b);
+                    }
+                }
+            }  
+            console.log(result);
+            while (result.includes("+") || result.includes("-")) {
+                for (let i = 0; i < result.length; i++) {
+                    if (result[i] === "+") {
+                        let b = parseFloat(result[i - 1]) + parseFloat(result[i + 1]);
+                        result.splice(i - 1, 3, b);
+                    }
+                    if (result[i] === "-") {
+                        let b = parseFloat(result[i - 1]) - parseFloat(result[i + 1]);
+                        result.splice(i - 1, 3, b);
+                    }
+                }
+    }
+    console.log(result);
+    }
 
         clear.addEventListener("click", function() {
             input.value = "";
@@ -126,6 +161,10 @@ var input = document.querySelector(".input");
             input.value += "9";
 
         })
+        one.addEventListener("click",function(){
+            input.value += "0";
+
+        })
         multiply.addEventListener("click",function(){
             input.value += "*";
 
@@ -142,8 +181,8 @@ var input = document.querySelector(".input");
             input.value += "-";
 
         })
-        equals.addEventListener("click",function(){
-            console.log(eval(input.value))
-        })
+        equals.addEventListener("click", function() {
+            console.log(cal());
+        });
     </script>
 </html>

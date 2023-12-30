@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính điểm đại học</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            }
+
+            .container {
+            width: 500px;
+            margin: 0 auto;
+            }
+
+            h1 {
+            text-align: center;
+            }
+
+            form {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            }
+
+            .row {
+            margin-bottom: 20px;
+            }
+
+            .col-md-4 {
+            width: 33.33%;
+            }
+
+            label {
+            font-weight: bold;
+            }
+
+            input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            }
+
+            select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            }
+
+            button {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tính điểm ĐH khối D</h1>
+        <form action="" method="post">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="mon_toan">Môn Toán</label>
+              <input name="mon_toan" id="mon_toan" required>
+            </div>
+            <div class="col-md-4">
+              <label for="mon_van">Môn Văn</label>
+              <input name="mon_van" id="mon_van" required>
+            </div>
+            <div class="col-md-4">
+              <label for="mon_anh">Môn Anh</label>
+              <input name="mon_anh" id="mon_anh" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="kv">Khu vực</label>
+              <select name="kv" id="kv" required>
+                <option value="KV1">KV1</option>
+                <option value="KV2">KV2</option>
+                <option value="KV3">KV3</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit">Tính điểm</button>
+        </form>
+      </div>
+</body>
+<script>
+    var monToan = document.querySelector("#mon_toan");
+    var monAnh = document.querySelector("#mon_anh");
+    var monVan = document.querySelector("#mon_van");
+    var kv = document.querySelector("#kv");
+    var button = document.querySelector("button");
+    let sum;
+
+    button.addEventListener("click", tong);
+
+    function tong() {
+        let a = parseFloat(monToan.value);
+        let b = parseFloat(monAnh.value);
+        let c = parseFloat(monVan.value);
+
+        if (isNaN(a) || isNaN(b) || isNaN(c) || a > 10 || a < 0 || b > 10 || b < 0 || c > 10 || c < 0) {
+            alert("Xin vui lòng nhập điểm hợp lệ");
+            return;
+        }
+
+        switch (kv.value) {
+            case 'KV1':
+                sum = a + b + c + 0.75;
+                break;
+            case 'KV2':
+                sum = a + b + c + 0.5;
+                break;
+            case 'KV3':
+                sum = a + b + c;
+                break;
+        }
+        console.log(sum);
+    }
+</script>
+
+</html>
