@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>calculator</title>
+    </head>
+    <style>
+        .calculator {
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+            margin: 0 auto;
+        }
+
+        .input {
+            width: 195px;
+            height: 50px;
+            border: 1px solid black;
+            background-color: #ccc;
+            font-size: 20px;
+            text-align: right;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            background-color: #fff;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .button-operator {
+            background-color: #f00;
+        }
+    </style>
+    <body>
+    <div class="calculator">
+        <input type="text" class="input" name="calculator">
+        <table>
+            <tr>
+                <button type="button" class="button-operatordivide">/</button>
+                <button type="button" class="button-number1">1</button>
+                <button type="button" class="button-number2">2</button>
+                <button type="button" class="button-number3">3</button>
+            </tr>
+            <br>
+            <tr>
+                <button type="button" class="button-operatoradd">+</button>
+                <button type="button" class="button-number4">4</button>
+                <button type="button" class="button-number5">5</button>
+                <button type="button" class="button-number6">6</button>
+            </tr>
+            <br>
+            <tr>
+                <button type="button" class="button-operatorsubtract">-</button>
+                <button type="button" class="button-number7">7</button>
+                <button type="button" class="button-number8">8</button>
+                <button type="button" class="button-number9">9</button>
+            </tr>
+            <br>
+            <tr>
+                <button type="button" class="button-operatormultiply">*</button>
+                <button type="button" class="button-number0">0</button>
+                <button type="button" class="button-operatorequals">=</button>
+                <button type="button" class="button-operatorclear">C</button>
+            </tr>
+        </table>
+    </div>
+    <body>
+    <script>
+var input = document.querySelector(".input");
+        console.log(input)
+        var clear = document.querySelector(".button-operatorclear");
+        var one = document.querySelector(".button-number1");
+        var two = document.querySelector(".button-number2");
+        var three = document.querySelector(".button-number3");
+        var four = document.querySelector(".button-number4");
+        var five = document.querySelector(".button-number5");
+        var six = document.querySelector(".button-number6");
+        var seven = document.querySelector(".button-number7");
+        var eight = document.querySelector(".button-number8");
+        var nine = document.querySelector(".button-number9");
+        var zero = document.querySelector(".button-number0");
+        var subtract = document.querySelector(".button-operatorsubtract");
+        var add = document.querySelector(".button-operatoradd");
+        var multiply = document.querySelector(".button-operatormultiply");
+        var divide = document.querySelector(".button-operatordivide");
+        var equals = document.querySelector(".button-operatorequals");
+
+        clear.addEventListener("click", function() {
+            input.value = "";
+        });
+
+        one.addEventListener("click", function() {
+            input.value += "1";
+        });
+
+        two.addEventListener("click", function() {
+            input.value += "2";
+        });
+        three.addEventListener("click", function() {
+            input.value += "3";
+        });
+        four.addEventListener("click",function(){
+            input.value += "4";
+
+        })
+        five.addEventListener("click",function(){
+            input.value += "5";
+
+        })
+        six.addEventListener("click",function(){
+            input.value += "6";
+
+        })
+        seven.addEventListener("click",function(){
+            input.value += "7";
+
+        })
+        eight.addEventListener("click",function(){
+            input.value += "8";
+
+        })
+        nine.addEventListener("click",function(){
+            input.value += "9";
+
+        })
+        multiply.addEventListener("click",function(){
+            input.value += "*";
+
+        })
+        divide.addEventListener("click",function(){
+            input.value += "/";
+
+        })
+        add.addEventListener("click",function(){
+            input.value += "+";
+
+        })
+        subtract.addEventListener("click",function(){
+            input.value += "-";
+
+        })
+        equals.addEventListener("click",function(){
+            console.log(eval(input.value))
+        })
+    </script>
+</html>
