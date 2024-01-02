@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>palindrome</title>
+</head>
+<body>
+</body>
+<script>
+    let str = prompt("Nhập một chuỗi cần kiểm tra palindrome: ")
+    function check(str){
+         for(let i = 0;i<str.length-1;i++){
+            if(str[i]!==str[str.length-i-1]){
+                return false
+                break;
+            }
+        }
+        return true
+    }
+    if(check(str)){
+        alert ("chuỗi là palindrome")
+    }else{
+        alert ("chuỗi không phải là palindrome")
+    }
+</script>
+</html>
