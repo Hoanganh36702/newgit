@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    arr1 = [3, 5, 1, 8, -3, 7, 8]
+    arr2 = [7, 12, 6, 9, 20, 56, 89]
+    arr3 = []
+    arr4 = [0, 0, 0, 0, 0, 0]
+    function minArray(arr1) {
+        let min = arr1[0];
+        for(var i = 1; i < arr1.length; i++){
+            if(arr1[i] < min){
+                min = arr1[i];
+            }
+        }
+        console.log(min)
+    }
+    minArray(arr1)
+    function maxArray(arr1) {
+        let max = arr1[0];
+        for(var i = 1; i < arr1.length; i++){
+            if(arr1[i] > max){
+                max = arr1[i];
+            }
+        }
+        console.log(max)
+    }
+    maxArray(arr1)
+</script>
+</html>
