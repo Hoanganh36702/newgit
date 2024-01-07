@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Temperature Converter</h1>
+  <div>
+    <label for="celsiusInput">Enter Temperature in Celsius:</label>
+    <input type="number" id="celsiusInput" min="-273" step="any">
+    <button onclick="convertTemperature()">Convert</button>
+  </div>
+  <div id="resultContainer" style="display: none;">
+    <p><strong>Temperature in Fahrenheit:</strong> <span id="fahrenheitOutput"></span></p>
+    <p><strong>Temperature in Kelvin:</strong> <span id="kelvinOutput"></span></p>
+  </div>
+
+  <script>
+                class Temperature {
+            constructor(celsius) {
+                this.celsius = celsius;
+            }
+
+            convertToCelsius() {
+                return this.celsius;
+            }
+
+            convertToFahrenheit() {
+                return (this.celsius * 9/5) + 32;
+            }
+
+            convertToKelvin() {
+                return this.celsius + 273.15;
+            }
+            }
+
+            function convertTemperature() {
+            const celsiusInput = document.getElementById("celsiusInput").value;
+            const temperature = new Temperature(parseFloat(celsiusInput));
+
+            const fahrenheitOutput = document.getElementById("fahrenheitOutput");
+            const kelvinOutput = document.getElementById("kelvinOutput");
+            const resultContainer = document.getElementById("resultContainer");
+
+            if (!isNaN(temperature.convertToCelsius())) {
+                const fahrenheit = temperature.convertToFahrenheit();
+                const kelvin = temperature.convertToKelvin();
+
+                fahrenheitOutput.textContent = fahrenheit.toFixed(2) + " °F";
+                kelvinOutput.textContent = kelvin.toFixed(2) + " K";
+                resultContainer.style.display = "block";
+            } else {
+                resultContainer.style.display = "none";
+                alert("Please enter a valid temperature in Celsius.");
+            }
+        }
+
+  </script>
+</body>
+</html>
