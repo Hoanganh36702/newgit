@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ứng dụng quản lý sản phẩm</title>
+</head>
+<style>
+    body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#list-product {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn {
+  width: 100px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+</style>
+<body>
+
+  <h1>Ứng dụng quản lý sản phẩm</h1>
+
+  <div id="list-product">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên sản phẩm</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="product-list"></tbody>
+    </table>
+  </div>
+
+  <div id="add-product">
+    <form action="add-product.php" method="post">
+      <div class="form-group">
+        <label for="product-name">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="product-name" name="product-name">
+      </div>
+      <button type="submit" class="btn btn-primary">Thêm</button>
+    </form>
+  </div>
+
+</body>
+<script>
+    // Mảng chứa danh sách sản phẩm
+const products = [];
+
+// Hàm hiển thị danh sách sản phẩm
+function showProducts() {
+  // Xóa sạch nội dung bảng
+  document.getElementById("product-list").innerHTML = "";
+
+  // Duyệt qua danh sách sản phẩm
+  for (let i = 0; i < products.length; i++) {
+    // Tạo một hàng trong bảng
+    const row = document.createElement("tr");
+
+    // Tạo một ô cho số thứ tự
+    const stt = document.createElement("td");
+    stt.innerHTML = i + 1;
+    row.appendChild(stt);
+
+    // Tạo một ô cho tên sản phẩm
+    const name = document.createElement("td");
+    name.innerHTML = products[i];
+    row.appendChild(name);
+
+    // Tạo một ô cho nút xoá sản phẩm
+    const deleteButton = document.createElement("td");
+    deleteButton.innerHTML = `<a href="#">Xoá</a>`;
+    deleteButton.addEventListener("click", () => {
+      // Tìm vị trí của sản phẩm cần xoá
+      const index = products.indexOf(name.innerHTML);
+
+      // Xoá sản phẩm đó khỏi danh sách
+      products.splice(index, 1);
+
+      // Hiển thị lại bảng
+      showProducts();
+    });
+    row.appendChild(deleteButton);
+
+    // Thêm hàng vào bảng
+    document.getElementById("product-list").appendChild(row);
+  }
+}
+
+// Hàm thêm một sản phẩm vào danh sách
+function addProduct() {
+  // Lấy tên sản phẩm từ form
+  const productName = document.getElementById("product-name").value;
+}
+  // Kiểm tra tên sản phẩm không được để trống
+  if (!productName) {
+    alert("Vui lòng nhập tên sản phẩm");
+    return;
+  }
+
+  // Thêm sản phẩm vào danh sách
+  products.push(productName);
+
+  // Hiển thị thông báo
+  alert("Thêm sản phẩm thành công");
+
+ 
+</script>
+</html>
