@@ -23,7 +23,8 @@
     }
     .playBtn{
         background-color: green;
-        font-size: 30px;
+        display: inline-block;
+        font-size: 25px;
         border-radius: 10px;
     }
     #gameOver{
@@ -37,7 +38,32 @@
         border-radius: 5px;
     }
     .diem{
-        font-size: 30px;
+        background-color: rgb(188, 78, 5);
+        color:rgb(255, 252, 252);
+        display: inline;
+        padding: 0 5px;
+        font-size: 25px;
+        border-radius: 10px;
+    }
+    .speed-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    }
+
+    .speedBtn {
+        margin: 0 10px;
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #08055d;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .speedBtn:hover {
+        background-color: #45a049;
     }
 </style>
 <body>
@@ -48,7 +74,12 @@
             <p class="diem" width="30px" height="50px">Score: <span id = "score">0</span></p>
             <div id="gameOver"></div>
         </div>
-        <button class="playBtn">Play game</button>
+        <button class="playBtn">Play Game</button>
+    </div>
+    <div class="speed-buttons">
+        <button class="speedBtn" data-speed="1000">Easy</button>
+        <button class="speedBtn" data-speed="500">Medium</button>
+        <button class="speedBtn" data-speed="200">Hard</button>
     </div>
 </body>
     <script>
@@ -372,9 +403,6 @@
             const interValid = setInterval(function downBrick(){
                     brick.movetoDown()
             }, 1000);
-            // function stopInterval() {
-            //     clearInterval(interValid);
-            // }
             function radomBrick(){
                 brick = new buildBrick(Math.floor(Math.random()*7))  
             }
@@ -397,6 +425,15 @@
                 }
             }
         );
+        document.querySelectorAll('.speedBtn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    clearInterval(interValid);
+                    const speed = parseInt(this.getAttribute('data-speed')); 
+                    interValid = setInterval(function() {
+                        brick.movetoDown();
+                    }, speed);
+                });
+            });
          var playBtn = document.querySelector(".playBtn");
             playBtn.addEventListener("click", function started() {
                 console.log("ok");
