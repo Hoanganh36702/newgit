@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game Tetris</title>
+</head>
+<style>
+    .content{
+        display:grid;
+        grid-template-columns: 320px 200px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px
+    }
+    .play{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .area{
+        border:2px solid black;
+    }
+    .playBtn{
+        background-color: green;
+        font-size: 30px;
+        border-radius: 10px;
+    }
+    #gameOver{
+        font-size: 30px
+    }
+    .color{
+        background-color: Red;
+        color:white;
+        box-sizing: border-box;
+        display: inline;
+        border-radius: 5px;
+    }
+    .diem{
+        font-size: 30px;
+    }
+</style>
+<body>
+    <div class="content">
+        <canvas class="area"></canvas>
+        <div class="play"></div>
+        <div>
+            <p class="diem" width="30px" height="50px">Score: <span id = "score">0</span></p>
+            <div id="gameOver"></div>
+        </div>
+        <button class="playBtn">Play game</button>
+    </div>
+</body>
+    <script>
+            var score = 0;
+            const cols = 15;
+            const rows = 25;
+            const block = 23;
+            const Color = [
+                "red",
+                "green",
+                "yellow",
+                "orange",
+                "blue",
+                "grey",
+                "purple",
+                "white",
+            ]
+            const blockBrick = [
+            [
+                [
+                    [1,7,7],
+                    [1,1,1],
+                    [7,7,7],
+                ],
+                [
+                    [7,1,1],
+                    [7,1,7],
+                    [7,1,7],
+                ],
+                [
+                    [7,7,7],
+                    [1,1,1],
+                    [7,7,1],
+                ],
+                [
+                    [7,1,7],
+                    [7,1,7],
+                    [1,1,7],
+                ],
+            ],  
+            [
+                [
+                    [7,1,7],
+                    [1,1,1],
+                    [7,7,7],
+                ],
+                [
+                    [7,1,7],
+                    [7,1,1],
+                    [7,1,7],
+                ],
+                [
+                    [7,7,7],
+                    [1,1,1],
+                    [7,1,7],
+                ],
+                [
+                    [7,1,7],
+                    [1,1,7],
+                    [7,1,7],
+                ],
+            ], 
+            [
+                [
+                    [7,7,7],
+                    [1,1,1],
+                    [1,7,7],
+                ],
+                [
+                    [1,1,7],
+                    [7,1,7],
+                    [7,1,7],
+                ],
+                [
+                    [7,7,1],
+                    [1,1,1],
+                    [7,7,7],
+                ],
+                [
+                    [7,1,7],
+                    [7,1,7],
+                    [7,1,1],
+                ],
+            ], 
+            [
+                [
+                    [1,1,7],
+                    [7,1,1],
+                    [7,7,7],
+                ],
+                [
+                    [7,1,7],
+                    [1,1,7],
+                    [1,7,7],
+                ],
+                [
+                    [1,1,7],
+                    [7,1,1],
+                    [7,7,7],
+                ],
+                [
+                    [7,1,7],
+                    [1,1,7],
+                    [1,7,7],
+                ],
+            ], 
+            [
+                [
+                    [7,1,1],
+                    [1,1,7],
+                    [7,7,7],
+                ],
+                [
+                    [7,1,7],
+                    [7,1,1],
+                    [7,7,1],
+                ],
+                [
+                    [7,1,1],
+                    [1,1,7],
+                    [7,7,7],
+                ],
+                [
+                    [7,1,7],
+                    [7,1,1],
+                    [7,7,1],
+                ],
+            ], 
+            [
+                    [
+                    [1,1],
+                    [1,1],
+                ],
+                [
+                    [1,1],
+                    [1,1],
+                ],
+                [
+                    [1,1],
+                    [1,1],
+                ],
+                [
+                    [1,1],
+                    [1,1],
+                ],
+        
+            ], 
+            [
+                    [
+                    [7,7,7,7],
+                    [1,1,1,1],
+                    [7,7,7,7],
+                    [7,7,7,7]
+                ],
+                [
+                    [7,1,7,7],
+                    [7,1,7,7],
+                    [7,1,7,7],
+                    [7,1,7,7]
+                ],
+                [
+                    [7,7,7,7],
+                    [1,1,1,1],
+                    [7,7,7,7],
+                    [7,7,7,7]
+                ],
+                [
+                    [7,1,7,7],
+                    [7,1,7,7],
+                    [7,1,7,7],
+                    [7,1,7,7]
+                ],
+        
+            ], 
+        ];
+
+            const c = document.querySelector(".area");
+            const ctx = c.getContext("2d");
+            ctx.canvas.width = cols*block;
+            ctx.canvas.height = rows*block;
+            class Board{
+                constructor(ctx){
+                    this.ctx = ctx
+                    this.grid = this.createArray(); //tạo bảng
+                }
+                createArray() {
+                const result = [];
+                for (let i = 0; i < rows; i++) {
+                    result.push(Array(cols).fill(7));
+                }
+                return result;
+            }
+                drawCell(x,y,color){ // Vẽ block
+                    this.ctx.fillStyle = Color[color] || Color[7]
+                    this.ctx.fillRect(x*block,y*block,block,block)
+                }
+                drawTable(){ //vẽ table
+                    for(let row = 0 ; row < this.grid.length;row++){
+                        for(let col = 0 ;col <  this.grid[0].length;col++){
+                            this.drawCell(col, row,this.grid[row][col]) 
+                        }
+                    }
+                }
+                rowComplete() {
+                    function filterGrid(board) {
+                        return board.grid.filter(function(row) {
+                            return row.some(function(col) {
+                                return col == 7;
+                            });
+                        });
+                    }
+                    const filterArray = filterGrid(board);
+                    board.grid = [filterArray];
+        
+                    const newRows = rows - filterArray.length;
+                    const newArrayAgain = [];
+                        for (let i = 0; i < newRows; i++) {
+                            newArrayAgain.push(Array(cols).fill(7));
+                    }
+                    board.grid = [...newArrayAgain,...filterArray];
+                    score += newRows*100
+                    document.querySelector("#score").innerHTML = score;
+                }
+            }
+        
+            class buildBrick{
+                constructor(id){
+                    this.id = id;
+                    // layout là bố cục của viên gạch
+                    this.layout = blockBrick[id];
+                    this.activeIndex = 0;
+                    this.brickPosiionCol = 5; //  Vị trí cột của khối
+                    this.brickPosiionRow = 0; // Vị trí hàng của khối
+                }
+                
+                draw(){ //vẽ gạch
+                    for(let row = 0 ; row < this.layout[this.activeIndex].length;row++){ //row là vị trí hàng của mảng chứa khối lập phương
+                        for(let col = 0 ; col < this.layout[this.activeIndex][0].length;col++){ //col là vị trí hàng của mảng trong khối lập phương
+                        if(this.layout[this.activeIndex][row][col] !== 7){
+                                board.drawCell(col+this.brickPosiionCol,row + this.brickPosiionRow,this.id)
+                        } 
+                        }
+                    }
+                }
+                clear(){ // Xóa gạch
+                    for(let row = 0 ; row < this.layout[this.activeIndex].length;row++){ 
+                        for(let col = 0 ; col < this.layout[this.activeIndex][0].length;col++){
+                        if(this.layout[this.activeIndex][row][col] !== 7){
+                                board.drawCell(col+this.brickPosiionCol,row + this.brickPosiionRow, 7)
+                        } 
+                        }
+                    }
+                }
+
+                movetoLeft(){
+                    if(!this.checkCollision(this.brickPosiionRow+1,this.brickPosiionCol-1,this.layout[this.activeIndex])){
+                        this.clear()
+                        this.brickPosiionCol--;
+                        this.draw()
+                    }
+                }
+                movetoRight(){
+                    if(!this.checkCollision(this.brickPosiionRow+1,this.brickPosiionCol+1,this.layout[this.activeIndex])){
+                    this.clear()
+                    this.brickPosiionCol++;
+                    this.draw()    
+                    }   
+                }
+                movetoDown(){
+                    if(!this.checkCollision(this.brickPosiionRow+1,this.brickPosiionCol,this.layout[this.activeIndex])){
+                    this.clear()
+                    this.brickPosiionRow++;
+                    this.draw()   
+                    }
+                    else{
+                    this.handleLand()
+                    radomBrick()
+                    };
+                }
+                rotate(){
+                    if(!this.checkCollision(this.brickPosiionRow+1,this.brickPosiionCol,this.layout[(this.activeIndex + 1) % 4])){ // Vị trí tương lai của đoạn code
+                    this.clear()
+                    this.activeIndex++
+                    if(this.activeIndex % 4 == 0)
+                        this.activeIndex = 0;
+                    this.draw()
+                    }
+                }
+                checkCollision(rowC,colC,layoutC){
+                    for(let row = 0 ;row < layoutC.length;row++){
+                        for(let col = 0;col < layoutC[0].length;col++){
+                            if(layoutC[row][col] !== 7){
+                                if((colC + col < 0 )||(colC + col >= cols) || (rowC + row >= rows|| board.grid[row+rowC][col+colC]) !== 7){ // check va chạm //
+                                    return true
+                                }
+                            }
+                        }
+                    }
+                }
+                myFunction() {
+                        var gameOver = document.getElementById("gameOver");
+                        gameOver.classList.add("color");
+                }
+                handleLand(){
+                    if(this.brickPosiionRow  <= 0){
+                        document.getElementById("gameOver").innerHTML = "GAME-OVER";
+                        this.myFunction
+                        setInterval(this.myFunction, 1000)
+                    }
+                    for(let row = 0 ; row < this.layout[this.activeIndex].length;row++){
+                        for(let col = 0 ; col < this.layout[this.activeIndex][0].length;col++){
+                            if(this.layout[this.activeIndex][row][col] !== 7){
+                                board.grid[row + this.brickPosiionRow][col +this.brickPosiionCol] = this.id
+                            }
+                        }
+                    }
+                    board.rowComplete()
+                    board.drawTable()
+                }
+            }
+            const interValid = setInterval(function downBrick(){
+                    brick.movetoDown()
+            }, 1000);
+            // function stopInterval() {
+            //     clearInterval(interValid);
+            // }
+            function radomBrick(){
+                brick = new buildBrick(Math.floor(Math.random()*7))  
+            }
+            board = new Board(ctx)
+            board.drawTable();
+            radomBrick()
+            brick.draw()
+            document.addEventListener("keydown", function move(event) {
+                if (event.key === "ArrowLeft") {
+                    brick.movetoLeft();
+                }
+                if (event.key === "ArrowRight") {
+                    brick.movetoRight();
+                }
+                if (event.key === "ArrowUp") {
+                    brick.rotate()
+                }
+                if (event.key === "ArrowDown") {
+                    brick.movetoDown()
+                }
+            }
+        );
+         var playBtn = document.querySelector(".playBtn");
+            playBtn.addEventListener("click", function started() {
+                console.log("ok");
+                location.reload();
+            });
+    </script>
+</html>
