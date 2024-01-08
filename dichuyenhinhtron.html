@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Circles</title>
+  <script src="circles.js"></script>
+</head>
+<body>
+  <canvas id="myCanvas" width="500" height="500"></canvas>
+</body>
+<script>
+            function createCircle(x, y, radius) {
+        var ctx = document.getElementById("myCanvas").getContext("2d");
+
+        // Vẽ hình tròn
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Di chuyển hình tròn
+        ctx.translate(x, y);
+        ctx.rotate(10);
+        }
+
+        function animateCircles() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+        // Tạo các hình tròn
+        for (var i = 0; i < 30; i++) {
+            createCircle(Math.random() * window.innerWidth, Math.random() * window.innerHeight, Math.floor(Math.random() * 80));
+        }
+
+        // Yêu cầu chạy lại hoạt ảnh
+        requestAnimationFrame(animateCircles);
+        }
+
+        animateCircles();
+</script>
+</html>
